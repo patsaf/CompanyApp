@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:background="#FFFFF0">
+
+            <TextView
+                android:id="@+id/ceo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="TextView"
+                android:layout_centerHorizontal="true"
+                android:textAlignment="center"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/ceo_details"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ceo"
+                android:layout_marginTop="15dp"
+                android:layout_centerHorizontal="true"
+                android:text="TextView" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_below="@id/ceo_details"
+                android:id="@+id/linear_buttons">
+
+                <Button
+                    android:id="@+id/hireButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
+                    android:background="@android:color/darker_gray"
+                    android:text="@string/hire_button" />
+
+                <Button
+                    android:id="@+id/fireButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
+                    android:background="@android:color/darker_gray"
+                    android:text="@string/fire_button" />
+
+                <Button
+                    android:id="@+id/assignButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:background="@android:color/darker_gray"
+                    android:text="@string/assign_button" />
+
+                <Button
+                    android:id="@+id/reportButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
+                    android:background="@android:color/darker_gray"
+                    android:text="@string/report_button" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/show_team"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="30dp"
+                android:layout_marginStart="30dp"
+                android:layout_below="@id/linear_buttons"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="30dp"
+                android:background="@android:color/darker_gray"
+                android:text="@string/show_team_button" />
+
+        <Button
+            android:id="@+id/hide_team"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="30dp"
+            android:layout_marginStart="30dp"
+            android:layout_below="@id/ceo"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:visibility="invisible"
+            android:background="@android:color/darker_gray"
+            android:text="@string/hide_team_button" />
+
+        <ListView
+            android:id="@+id/lv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/hide_team"
+            android:visibility="invisible" />
+
+    <Button
+        android:id="@+id/cancel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/linear_buttons"
+        android:layout_centerHorizontal="true"
+        android:layout_marginEnd="30dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="30dp"
+        android:background="@android:color/darker_gray"
+        android:text="@string/go_back"
+        android:visibility="invisible" />
+
+    <Spinner
+        android:id="@+id/fire_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/cancel"
+        android:layout_marginEnd="30dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/border"
+        android:visibility="invisible" />
+
+    <Button
+        android:id="@+id/confirm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/ceo"
+        android:layout_marginTop="20dp"
+        android:background="@color/colorAccent"
+        android:text="@string/confirm"
+        android:visibility="invisible" />
+
+    <Button
+        android:id="@+id/cancel_firing"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/confirm"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:background="?attr/colorAccent"
+        android:text="@string/cancel"
+        android:visibility="invisible" />
+
+</RelativeLayout>
