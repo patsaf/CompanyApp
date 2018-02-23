@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:text="@string/hire_manager_title"
         android:textColor="@android:color/darker_gray"
         android:textSize="18sp"
@@ -24,18 +24,20 @@
         android:layout_below="@+id/title"></include>
 
     <Button
-        android:id="@+id/generate_random"
+        android:id="@+id/cancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@id/cancel"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
         android:layout_marginBottom="19dp"
         android:layout_marginEnd="8dp"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
         android:background="@android:color/darker_gray"
-        android:text="@string/button_generate" />
+        android:text="@string/cancel"/>
 
     <Button
-        android:id="@+id/cancel"
+        android:id="@+id/generate_random"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -44,14 +46,14 @@
         android:layout_marginBottom="19dp"
         android:background="@drawable/border"
         android:backgroundTint="@android:color/darker_gray"
-        android:text="@string/cancel"/>
+        android:text="@string/button_generate" />
 
     <Button
         android:id="@+id/hire"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
+        android:layout_above="@id/cancel"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="19dp"
         android:background="@drawable/border"

@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -63,6 +64,7 @@ public class HireManagerActivity extends AppCompatActivity{
     private Button hire;
     private Button generateRandom;
     private Button cancel;
+    private RelativeLayout relativeSpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -178,6 +180,7 @@ public class HireManagerActivity extends AppCompatActivity{
                 Resources res = getResources();
                 String[] predicates = res.getStringArray(R.array.predicate_array);
 
+                relativeSpinner.setVisibility(View.INVISIBLE);
                 conditionDetailLabel.setVisibility(View.INVISIBLE);
                 conditionDetail.setVisibility(View.INVISIBLE);
                 conditionDetailSpinner.setVisibility(View.INVISIBLE);
@@ -194,6 +197,7 @@ public class HireManagerActivity extends AppCompatActivity{
                     conditionDetail.setVisibility(View.VISIBLE);
                 } else if(adapterView.getItemAtPosition(i).equals(predicates[3])) {
                     predicateItem = Predicates.GENDER;
+                    relativeSpinner.setVisibility(View.VISIBLE);
                     conditionDetailLabel.setVisibility(View.VISIBLE);
                     conditionDetailSpinner.setVisibility(View.VISIBLE);
                     conditionDetailSpinner.setAdapter(createAdapter(R.array.gender_array));
@@ -249,7 +253,9 @@ public class HireManagerActivity extends AppCompatActivity{
         hire = findViewById(R.id.hire);
         generateRandom = findViewById(R.id.generate_random);
         cancel = findViewById(R.id.cancel);
+        relativeSpinner = findViewById(R.id.relativeSpinner);
 
+        relativeSpinner.setVisibility(View.INVISIBLE);
         conditionDetailLabel.setVisibility(View.INVISIBLE);
         conditionDetail.setVisibility(View.INVISIBLE);
         conditionDetailSpinner.setVisibility(View.INVISIBLE);

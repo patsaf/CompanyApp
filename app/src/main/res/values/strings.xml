@@ -15,7 +15,7 @@
     <string name="email">Email address</string>
     <string name="hiring_condition">Hires only:</string>
     <string name="button_add">Hire CEO</string>
-    <string name="button_generate">Generate random details</string>
+    <string name="button_generate"> Generate random details </string>
     <string name="capacity">Subordinates capacity</string>
     <string name="condition_detail">Insert condition</string>
 

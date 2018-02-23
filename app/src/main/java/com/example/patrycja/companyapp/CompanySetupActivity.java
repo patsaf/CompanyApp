@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -52,6 +53,7 @@ public class CompanySetupActivity extends AppCompatActivity {
     private TextView capacity;
     private Button addCeo;
     private Button generateRandom;
+    private RelativeLayout relativeSpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,6 +111,7 @@ public class CompanySetupActivity extends AppCompatActivity {
                 Resources res = getResources();
                 String[] predicates = res.getStringArray(R.array.predicate_array);
 
+                relativeSpinner.setVisibility(View.INVISIBLE);
                 conditionDetailLabel.setVisibility(View.INVISIBLE);
                 conditionDetail.setVisibility(View.INVISIBLE);
                 conditionDetailSpinner.setVisibility(View.INVISIBLE);
@@ -126,6 +129,7 @@ public class CompanySetupActivity extends AppCompatActivity {
                 } else if(adapterView.getItemAtPosition(i).equals(predicates[3])) {
                     predicateItem = Predicates.GENDER;
                     conditionDetailLabel.setVisibility(View.VISIBLE);
+                    relativeSpinner.setVisibility(View.VISIBLE);
                     conditionDetailSpinner.setVisibility(View.VISIBLE);
                     conditionDetailSpinner.setAdapter(createAdapter(R.array.gender_array));
                     conditionDetailSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -179,7 +183,9 @@ public class CompanySetupActivity extends AppCompatActivity {
         capacity = findViewById(R.id.editCapacity);
         addCeo = findViewById(R.id.add_ceo);
         generateRandom = findViewById(R.id.generate_random);
+        relativeSpinner = findViewById(R.id.relativeSpinner);
 
+        relativeSpinner.setVisibility(View.INVISIBLE);
         conditionDetailLabel.setVisibility(View.INVISIBLE);
         conditionDetail.setVisibility(View.INVISIBLE);
         conditionDetailSpinner.setVisibility(View.INVISIBLE);

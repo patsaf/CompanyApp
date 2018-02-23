@@ -11,15 +11,9 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:gravity="center_horizontal"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
         android:orientation="vertical">
-
-        <EditText
-            android:id="@+id/editFirstName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:text="" />
 
         <TextView
             android:id="@+id/firstName"
@@ -27,45 +21,57 @@
             android:layout_height="wrap_content"
             android:text="@string/first_name" />
 
-        <Spinner
-            android:id="@+id/editGender"
-            android:layout_width="wrap_content"
+        <EditText
+            android:id="@+id/editFirstName"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="35dp" />
+            android:inputType="textCapWords"
+            android:textSize="14sp"
+            android:background="@drawable/border" />
 
         <TextView
             android:id="@+id/gender"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
             android:text="@string/gender" />
 
-        <EditText
-            android:id="@+id/editUniversity"
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:layout_marginTop="15dp" />
+            android:background="@drawable/spinner_border">
+
+            <Spinner
+                android:id="@+id/editGender"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/university"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/university" />
+            android:text="@string/university"
+            android:layout_marginTop="15dp" />
+
+        <EditText
+            android:id="@+id/editUniversity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textCapWords"
+            android:textSize="14sp"
+            android:background="@drawable/border" />
+
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:gravity="center_horizontal"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
         android:orientation="vertical">
-
-        <EditText
-            android:id="@+id/editLastName"
-            android:layout_width="wrap_content"
-            android:textSize="14sp"
-            android:layout_height="wrap_content"
-            android:text="" />
 
         <TextView
             android:id="@+id/lastName"
@@ -73,32 +79,44 @@
             android:layout_height="wrap_content"
             android:text="@string/last_name" />
 
-
         <EditText
-            android:id="@+id/editEmail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/editLastName"
+            android:layout_width="match_parent"
             android:textSize="14sp"
-            android:layout_marginTop="20dp" />
+            android:inputType="textCapWords"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border" />
 
         <TextView
             android:id="@+id/email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:text="@string/email" />
 
         <EditText
-            android:id="@+id/editCountry"
-            android:layout_width="wrap_content"
+            android:id="@+id/editEmail"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:layout_marginTop="15dp" />
+            android:inputType="textEmailAddress"
+            android:background="@drawable/border"
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/country"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
             android:text="@string/coutry" />
+
+        <EditText
+            android:id="@+id/editCountry"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textCapWords"
+            android:textSize="14sp"
+            android:background="@drawable/border" />
+
     </LinearLayout>
 
 </LinearLayout>

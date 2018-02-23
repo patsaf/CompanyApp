@@ -199,7 +199,7 @@ public class HireDeveloperActivity extends AppCompatActivity {
         email = findViewById(R.id.editEmail);
         university = findViewById(R.id.editUniversity);
         country = findViewById(R.id.editCountry);
-        role = findViewById(R.id.edit_ole);
+        role = findViewById(R.id.edit_role);
         hire = findViewById(R.id.hire);
         generateRandom = findViewById(R.id.generate_random);
         cancel = findViewById(R.id.cancel);

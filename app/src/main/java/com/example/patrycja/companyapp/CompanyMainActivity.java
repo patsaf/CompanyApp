@@ -1,5 +1,6 @@
 package com.example.patrycja.companyapp;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,9 +29,9 @@ import java.util.ArrayList;
 public class CompanyMainActivity extends AppCompatActivity{
 
     private final Context context = CompanyMainActivity.this;
+    private final Activity activity = this;
     private TextView displayCeo;
     private TextView displayCeoDetails;
-    private TextView ceoTeam;
     private TeamManager ceo;
     private ListView lv;
     private ArrayList<Employee> employeeList;
@@ -39,11 +41,10 @@ public class CompanyMainActivity extends AppCompatActivity{
     private Button hideTeam;
     private Button hire;
     private Button cancel;
-    private Button confirmHiring;
-    private Button cancelFiring;
     private Button fire;
     private Button assign;
     private Button report;
+    private RelativeLayout relativeSpinner;
     private final Display display = new Display();
     private final String select = "[select employees]";
 
@@ -77,11 +78,11 @@ public class CompanyMainActivity extends AppCompatActivity{
         hideTeam = findViewById(R.id.hide_team);
         hire = findViewById(R.id.hireButton);
         cancel = findViewById(R.id.cancel);
-        confirmHiring = findViewById(R.id.confirm);
-        cancelFiring = findViewById(R.id.cancel_firing);
         fire = findViewById(R.id.fireButton);
         assign = findViewById(R.id.assignButton);
         report = findViewById(R.id.reportButton);
+        relativeSpinner = findViewById(R.id.relativeSpinner);
+        relativeSpinner.setVisibility(View.INVISIBLE);
     }
 
     private void setupShowTeam() {
@@ -143,6 +144,7 @@ public class CompanyMainActivity extends AppCompatActivity{
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                relativeSpinner.setVisibility(View.INVISIBLE);
                 fireSpinner.setVisibility(View.INVISIBLE);
                 cancel.setVisibility(View.INVISIBLE);
                 showTeam.setVisibility(View.VISIBLE);
@@ -153,6 +155,7 @@ public class CompanyMainActivity extends AppCompatActivity{
             @Override
             public void onClick(View view) {
                 if(ceo.getListSize()!= 0) {
+                    relativeSpinner.setVisibility(View.VISIBLE);
                     fireSpinner.setVisibility(View.VISIBLE);
                     cancel.setVisibility(View.VISIBLE);
                     showTeam.setVisibility(View.INVISIBLE);
@@ -162,29 +165,9 @@ public class CompanyMainActivity extends AppCompatActivity{
                         @Override
                         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                             if (!(adapterView.getItemAtPosition(i).equals(select))) {
-                                confirmHiring.setVisibility(View.VISIBLE);
-                                cancelFiring.setVisibility(View.VISIBLE);
-
-                                confirmHiring.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-                                        Employee employee = ceo.getListEmployee(i-1);
-                                        ceo.fire(employee);
-                                        confirmHiring.setVisibility(View.INVISIBLE);
-                                        cancelFiring.setVisibility(View.INVISIBLE);
-                                        setSpinnerAdapter();
-                                        Toast.makeText(context, "Fired successfully!", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-
-                                cancelFiring.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-                                        confirmHiring.setVisibility(View.INVISIBLE);
-                                        cancelFiring.setVisibility(View.INVISIBLE);
-                                        adapterView.setSelection(0);
-                                    }
-                                });
+                                FirePopup firePopup = new FirePopup();
+                                firePopup.display(activity, confirm_proc(i));
+                                adapterView.setSelection(0);
                             }
                         }
 
@@ -246,6 +229,17 @@ public class CompanyMainActivity extends AppCompatActivity{
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(context,
                 android.R.layout.simple_spinner_item, employees);
         fireSpinner.setAdapter(spinnerAdapter);
+    }
+
+    private Runnable confirm_proc(int i){
+        return new Runnable() {
+            public void run() {
+                Employee employee = ceo.getListEmployee(i-1);
+                ceo.fire(employee);
+                setSpinnerAdapter();
+                Toast.makeText(context, "Fired successfully!", Toast.LENGTH_SHORT).show();
+            }
+        };
     }
 
 }
