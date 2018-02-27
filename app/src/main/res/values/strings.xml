@@ -51,6 +51,7 @@
 
     <!-- manager activity -->
     <string name="show_manager_team">Show manager team</string>
+    <string name="done_firing">Done</string>
 
     <!-- hire developer -->
     <string name="hire_dev_title">Fill your developer details</string>
@@ -67,7 +68,7 @@
     <string name="task_title">Fill your task details</string>
     <string name="task_name">Task description</string>
     <string name="units">Units of work</string>
-    <string name="done">Done</string>
+    <string name="back">Return</string>
 
     <!-- report -->
     <string name="report_title">Company report</string>

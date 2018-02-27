@@ -1,86 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFF0">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center_horizontal">
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
-            android:text="@string/hire_manager_title"
-            android:textColor="@android:color/darker_gray"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/spinner_border">
-            <Spinner
-                android:id="@+id/edit_role"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-        </RelativeLayout>
-
-        <TextView
-            android:id="@+id/role"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/role" />
-
-        <include
-            layout="@layout/employee_form"
-            android:layout_height="wrap_content"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_below="@id/title" />
+            android:layout_height="wrap_content"
+            android:id="@+id/dev_form"
+            android:orientation="vertical"
+            android:gravity="center_horizontal">
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/hire_manager_title"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/generate_random"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/cancel"
-        android:layout_marginStart="8dp"
-        android:layout_marginBottom="19dp"
-        android:paddingRight="5dp"
-        android:paddingLeft="5dp"
-        android:background="@android:color/darker_gray"
-        android:text="@string/button_generate" />
+            <TextView
+                android:id="@+id/role"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/role" />
 
-    <Button
-        android:id="@+id/cancel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="8dp"
-        android:layout_marginBottom="19dp"
-        android:background="@drawable/border"
-        android:backgroundTint="@android:color/darker_gray"
-        android:text="@string/cancel"/>
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/spinner_border">
 
-    <Button
-        android:id="@+id/hire"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginBottom="19dp"
-        android:layout_marginEnd="8dp"
-        android:background="@drawable/border"
-        android:backgroundTint="@android:color/darker_gray"
-        android:text="@string/hire_button" />
+                <Spinner
+                    android:id="@+id/edit_role"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
 
+            </RelativeLayout>
 
-</RelativeLayout>
+            <include
+                layout="@layout/employee_form"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"/>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/generate_random"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/hire"
+            android:layout_marginStart="15dp"
+            android:layout_marginBottom="15dp"
+            android:paddingRight="5dp"
+            android:paddingLeft="5dp"
+            android:background="@android:color/darker_gray"
+            android:text="@string/button_generate" />
+
+        <Button
+            android:id="@+id/cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/dev_form"
+            android:layout_alignEnd="@id/dev_form"
+            android:layout_marginEnd="15dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="20dp"
+            android:background="@android:color/darker_gray"
+            android:text="@string/cancel" />
+
+        <Button
+            android:id="@+id/hire"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/cancel"
+            android:layout_alignEnd="@id/dev_form"
+            android:layout_marginBottom="15dp"
+            android:layout_marginEnd="15dp"
+            android:background="@drawable/border"
+            android:backgroundTint="@android:color/darker_gray"
+            android:text="@string/hire_button" />
+
+    </RelativeLayout>
+
+</ScrollView>

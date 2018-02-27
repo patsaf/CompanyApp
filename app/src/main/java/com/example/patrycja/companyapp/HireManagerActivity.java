@@ -253,6 +253,7 @@ public class HireManagerActivity extends AppCompatActivity{
         hire = findViewById(R.id.hire);
         generateRandom = findViewById(R.id.generate_random);
         cancel = findViewById(R.id.cancel);
+        cancel.setVisibility(View.VISIBLE);
         relativeSpinner = findViewById(R.id.relativeSpinner);
 
         relativeSpinner.setVisibility(View.INVISIBLE);

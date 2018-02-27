@@ -12,17 +12,21 @@
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CompanySetupActivity"/>
+        <activity android:name=".CompanySetupActivity"
+            android:windowSoftInputMode="stateHidden"/>
         <activity android:name=".CompanyMainActivity"/>
-        <activity android:name=".HireManagerActivity"/>
+        <activity android:name=".HireManagerActivity"
+            android:windowSoftInputMode="stateHidden"/>
         <activity android:name=".CompanyManagerActivity"/>
-        <activity android:name=".HireDeveloperActivity"/>
+        <activity android:name=".HireDeveloperActivity"
+            android:windowSoftInputMode="stateHidden"/>
         <activity android:name=".TaskActivity"/>
         <activity android:name=".ReportActivity"/>
+        <activity android:name=".ManagerListActivity"/>
+        <activity android:name=".DeveloperListActivity"/>
     </application>
 
 </manifest>

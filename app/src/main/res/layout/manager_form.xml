@@ -190,5 +190,18 @@
             android:textSize="14sp"
             android:background="@drawable/border"/>
 
+        <Button
+            android:id="@+id/cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="39dp"
+            android:layout_gravity="end"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:background="@android:color/darker_gray"
+            android:text="@string/cancel"
+            android:visibility="invisible"/>
+
+
     </LinearLayout>
 </LinearLayout>

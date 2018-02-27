@@ -33,8 +33,6 @@ public class CompanyMainActivity extends AppCompatActivity{
     private TextView displayCeo;
     private TextView displayCeoDetails;
     private TeamManager ceo;
-    private ListView lv;
-    private ArrayList<Employee> employeeList;
     private Spinner fireSpinner;
     private LinearLayout linearButtons;
     private Button showTeam;
@@ -72,7 +70,6 @@ public class CompanyMainActivity extends AppCompatActivity{
         displayCeoDetails = findViewById(R.id.ceo_details);
         displayCeoDetails.setText(display.displayManager(ceo));
         fireSpinner = findViewById(R.id.fire_spinner);
-        lv = findViewById(R.id.lv);
         linearButtons = findViewById(R.id.linear_buttons);
         showTeam = findViewById(R.id.show_team);
         hideTeam = findViewById(R.id.hide_team);
@@ -90,41 +87,12 @@ public class CompanyMainActivity extends AppCompatActivity{
             @Override
             public void onClick(View view) {
                 if(ceo.getListSize()!=0) {
-                    employeeList = new ArrayList<>();
-                    for (int i = 0; i < ceo.getListSize(); i++) {
-                        employeeList.add(ceo.getListEmployee(i));
-                    }
-                    EmployeeAdapter adapter = new EmployeeAdapter(context, employeeList, ceo);
-                    lv.setAdapter(adapter);
-                    setListVisible();
+                    startMyActivity(ManagerListActivity.class);
                 } else {
                     Toast.makeText(context, "Your team is empty!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
-
-        hideTeam.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                setListInvisible();
-            }
-        });
-    }
-
-    private void setListVisible() {
-        displayCeoDetails.setVisibility(View.INVISIBLE);
-        linearButtons.setVisibility(View.INVISIBLE);
-        showTeam.setVisibility(View.INVISIBLE);
-        lv.setVisibility(View.VISIBLE);
-        hideTeam.setVisibility(View.VISIBLE);
-    }
-
-    private void setListInvisible() {
-        displayCeoDetails.setVisibility(View.VISIBLE);
-        linearButtons.setVisibility(View.VISIBLE);
-        showTeam.setVisibility(View.VISIBLE);
-        lv.setVisibility(View.INVISIBLE);
-        hideTeam.setVisibility(View.INVISIBLE);
     }
 
     private void setupHire() {
@@ -165,8 +133,10 @@ public class CompanyMainActivity extends AppCompatActivity{
                         @Override
                         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                             if (!(adapterView.getItemAtPosition(i).equals(select))) {
+                                Employee employee = ceo.getListEmployee(i-1);
+                                String message = employee.getFirstName().toString() + " " + employee.getLastName().toString();
                                 FirePopup firePopup = new FirePopup();
-                                firePopup.display(activity, confirm_proc(i));
+                                firePopup.display(activity, confirm_proc(employee), message);
                                 adapterView.setSelection(0);
                             }
                         }
@@ -231,10 +201,9 @@ public class CompanyMainActivity extends AppCompatActivity{
         fireSpinner.setAdapter(spinnerAdapter);
     }
 
-    private Runnable confirm_proc(int i){
+    private Runnable confirm_proc(Employee employee){
         return new Runnable() {
             public void run() {
-                Employee employee = ceo.getListEmployee(i-1);
                 ceo.fire(employee);
                 setSpinnerAdapter();
                 Toast.makeText(context, "Fired successfully!", Toast.LENGTH_SHORT).show();

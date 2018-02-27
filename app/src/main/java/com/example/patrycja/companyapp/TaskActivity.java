@@ -10,6 +10,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,8 +44,8 @@ public class TaskActivity extends AppCompatActivity {
     private EditText units;
     private Button assignButton;
     private Button generateRandom;
-    private Button doneButton;
-    private Button cancelButton;
+    private Button returnButton;
+    private ScrollView mainScrollView;
     private final String select = "[select employee]";
     private final Display display = new Display();
 
@@ -70,8 +73,7 @@ public class TaskActivity extends AppCompatActivity {
         setupGenerateRandom();
         setSpinnerAdapter();
         setupSpinner();
-        setupBack(doneButton);
-        setupBack(cancelButton);
+        setupBack(returnButton);
     }
 
     private  void initialize() {
@@ -84,8 +86,8 @@ public class TaskActivity extends AppCompatActivity {
         units = findViewById(R.id.edit_units);
         generateRandom = findViewById(R.id.generate_random);
         assignButton = findViewById(R.id.assign);
-        doneButton = findViewById(R.id.done);
-        cancelButton = findViewById(R.id.cancel);
+        returnButton = findViewById(R.id.go_back);
+        mainScrollView = findViewById(R.id.main_scroll);
     }
 
     private void setupGenerateRandom() {
@@ -113,7 +115,9 @@ public class TaskActivity extends AppCompatActivity {
                             setTextBlack();
                             if(checkForm()) {
                                 try {
-                                    task = new Task(taskName.getText().toString(), Integer.parseInt(units.getText().toString()));
+                                    task = new Task(
+                                            taskName.getText().toString(),
+                                            Integer.parseInt(units.getText().toString()));
                                     if(index != -1) {
                                         Employee employee = manager.getListEmployee(i-1);
                                         manager.assign(task, employee);
@@ -123,6 +127,7 @@ public class TaskActivity extends AppCompatActivity {
                                     }
                                     adapterView.setSelection(0);
                                     setupForm();
+                                    mainScrollView.fullScroll(View.FOCUS_UP);
                                     Toast.makeText(context, "Assigned successfully!", Toast.LENGTH_SHORT).show();
                                 } catch(IllegalArgumentException e) {
                                     Toast.makeText(context, "Invalid data!", Toast.LENGTH_SHORT).show();
