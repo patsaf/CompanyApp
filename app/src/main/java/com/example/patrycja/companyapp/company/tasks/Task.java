@@ -10,7 +10,9 @@ public class Task {
         this.unitsOfWork = unitsOfWork;
     }
 
-    public int getUnitsOfWork() { return unitsOfWork; }
+    public int getUnitsOfWork() {
+        return unitsOfWork;
+    }
 
     @Override
     public String toString() {

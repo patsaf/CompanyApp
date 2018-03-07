@@ -1,21 +1,11 @@
 package com.example.patrycja.companyapp.company.employees;
 
-import com.example.patrycja.companyapp.company.employees.details.Country;
-import com.example.patrycja.companyapp.company.employees.details.Email;
-import com.example.patrycja.companyapp.company.employees.details.EmployeeRole;
-import com.example.patrycja.companyapp.company.employees.details.EmployeeType;
-import com.example.patrycja.companyapp.company.employees.details.FirstName;
-import com.example.patrycja.companyapp.company.employees.details.Gender;
-import com.example.patrycja.companyapp.company.employees.details.LastName;
-import com.example.patrycja.companyapp.company.employees.details.University;
+import com.example.patrycja.companyapp.company.employees.details.*;
 import com.example.patrycja.companyapp.company.managers.TeamManager;
-import com.example.patrycja.companyapp.company.predicates.PredicateFactory;
 import com.example.patrycja.companyapp.company.predicates.PredicateInfo;
 import com.example.patrycja.companyapp.company.predicates.Predicates;
 
-import java.util.Arrays;
 import java.util.Random;
-import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 public class EmployeeFactory {
@@ -42,7 +32,7 @@ public class EmployeeFactory {
         int number = r.nextInt(Predicates.values().length);
         String[] table = chooseTable(number);
         String conditionValue = table[r.nextInt(table.length)];
-        if(type == EmployeeType.MANAGER) {
+        if (type.equals(EmployeeType.MANAGER)) {
             employee = new TeamManager.ManagerBuilder(role)
                     .capacity(capacity)
                     .gender(g)
@@ -65,7 +55,9 @@ public class EmployeeFactory {
         }
     }
 
-    public Employee getEmployee() { return employee; }
+    public Employee getEmployee() {
+        return employee;
+    }
 
     private String generate(String[] table) {
         int n = table.length;
@@ -78,19 +70,19 @@ public class EmployeeFactory {
 
     private String[] chooseTable(int i) {
         String[] table = {""};
-        switch(i) {
-            case(0):
+        switch (i) {
+            case (0):
                 break;
-            case(3):
+            case (3):
                 table = countries;
                 break;
-            case(1):
+            case (1):
                 table = universities;
                 break;
-            case(4):
+            case (4):
                 table = domains;
                 break;
-            case(2):
+            case (2):
                 table = Stream.of(Gender.values())
                         .map(Gender::name)
                         .toArray(String[]::new);

@@ -17,12 +17,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Button newCompany = findViewById(R.id.newCompany);
-        newCompany.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(context, CompanySetupActivity.class);
-                startActivity(intent);
-            }
+        newCompany.setOnClickListener(view -> {
+            Intent intent = new Intent(context, CompanySetupActivity.class);
+            startActivity(intent);
         });
     }
 }

@@ -18,14 +18,7 @@ import com.example.patrycja.companyapp.company.android.InterfaceAdapter;
 import com.example.patrycja.companyapp.company.employees.Developer;
 import com.example.patrycja.companyapp.company.employees.Employee;
 import com.example.patrycja.companyapp.company.employees.EmployeeFactory;
-import com.example.patrycja.companyapp.company.employees.details.Country;
-import com.example.patrycja.companyapp.company.employees.details.Email;
-import com.example.patrycja.companyapp.company.employees.details.EmployeeRole;
-import com.example.patrycja.companyapp.company.employees.details.EmployeeType;
-import com.example.patrycja.companyapp.company.employees.details.FirstName;
-import com.example.patrycja.companyapp.company.employees.details.Gender;
-import com.example.patrycja.companyapp.company.employees.details.LastName;
-import com.example.patrycja.companyapp.company.employees.details.University;
+import com.example.patrycja.companyapp.company.employees.details.*;
 import com.example.patrycja.companyapp.company.managers.TeamManager;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -62,9 +55,12 @@ public class HireDeveloperActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.hire_developer_activity);
 
-        index = getIntent().getExtras().getInt("managerIndex");
+        index = getIntent()
+                .getExtras()
+                .getInt("managerIndex");
         String ceoData = getIntent().getStringExtra("ceoData");
-        Gson gson = new GsonBuilder().registerTypeAdapter(Employee.class, new InterfaceAdapter<Employee>())
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(Employee.class, new InterfaceAdapter<Employee>())
                 .create();
         ceo = gson.fromJson(ceoData, TeamManager.class);
         manager = (TeamManager) ceo.getListEmployee(index);
@@ -77,7 +73,8 @@ public class HireDeveloperActivity extends AppCompatActivity {
     }
 
     private void startMyActivity(Class<?> activity) {
-        Gson gson = new GsonBuilder().registerTypeAdapter(Employee.class, new InterfaceAdapter<Employee>())
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(Employee.class, new InterfaceAdapter<Employee>())
                 .create();
         String json = gson.toJson(ceo);
         Intent intent = new Intent(context, activity);
@@ -87,56 +84,45 @@ public class HireDeveloperActivity extends AppCompatActivity {
     }
 
     private void setupCancel() {
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startMyActivity(CompanyManagerActivity.class);
-            }
-        });
+        cancel.setOnClickListener(view -> startMyActivity(CompanyManagerActivity.class));
     }
 
     private void setupGenerateRandom() {
-        generateRandom.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                EmployeeFactory randomEmployee = new EmployeeFactory(EmployeeType.MANAGER, EmployeeRole.CEO, 2);
-                Resources res = getResources();
-                String[] genders = res.getStringArray(R.array.gender_array);
-                Random r = new Random();
-                lastName.setText(randomEmployee.getLastName());
-                email.setText(randomEmployee.getEmail());
-                university.setText(randomEmployee.getUniversity());
-                country.setText(randomEmployee.getCountry());
-                firstName.setText((gender.getSelectedItem().equals(genders[0])) ?
-                        randomEmployee.getFemaleName() : randomEmployee.getMaleName());
-            }
+        generateRandom.setOnClickListener(view -> {
+            EmployeeFactory randomEmployee = new EmployeeFactory(EmployeeType.MANAGER, EmployeeRole.CEO, 2);
+            Resources res = getResources();
+            String[] genders = res.getStringArray(R.array.gender_array);
+            Random r = new Random();
+            lastName.setText(randomEmployee.getLastName());
+            email.setText(randomEmployee.getEmail());
+            university.setText(randomEmployee.getUniversity());
+            country.setText(randomEmployee.getCountry());
+            firstName.setText((gender.getSelectedItem().equals(genders[0])) ?
+                    randomEmployee.getFemaleName() : randomEmployee.getMaleName());
         });
     }
 
     private void setupHire() {
-        hire.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Developer developer;
-                setTextBlack();
-                if(checkForm()) {
-                    try {
-                        developer = (Developer) new Developer.DeveloperBuilder(roleItem)
-                                .name(new FirstName(firstName.getText().toString()), new LastName(lastName.getText().toString()))
-                                .country(new Country(country.getText().toString()))
-                                .university(new University(university.getText().toString()))
-                                .email(new Email(email.getText().toString()))
-                                .gender(genderItem)
-                                .build();
-                        if(manager.makePredicate().test(developer)) {
-                            manager.hire(developer);
-                            startMyActivity(CompanyManagerActivity.class);
-                        } else {
-                            Toast.makeText(context, ceo.getConditionInfo().toString(), Toast.LENGTH_SHORT).show();
-                        }
-                    } catch(IllegalArgumentException e) {
-                        Toast.makeText(context, "Invalid data!", Toast.LENGTH_SHORT).show();
+        hire.setOnClickListener(view -> {
+            Developer developer;
+            setTextBlack();
+            if (checkForm()) {
+                try {
+                    developer = (Developer) new Developer.DeveloperBuilder(roleItem)
+                            .name(new FirstName(firstName.getText().toString()), new LastName(lastName.getText().toString()))
+                            .country(new Country(country.getText().toString()))
+                            .university(new University(university.getText().toString()))
+                            .email(new Email(email.getText().toString()))
+                            .gender(genderItem)
+                            .build();
+                    if (manager.makePredicate().test(developer)) {
+                        manager.hire(developer);
+                        startMyActivity(CompanyManagerActivity.class);
+                    } else {
+                        Toast.makeText(context, ceo.getConditionInfo().toString(), Toast.LENGTH_SHORT).show();
                     }
+                } catch (IllegalArgumentException e) {
+                    Toast.makeText(context, "Invalid data!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -151,7 +137,7 @@ public class HireDeveloperActivity extends AppCompatActivity {
                 String[] genders = res.getStringArray(R.array.gender_array);
                 if (adapterView.getItemAtPosition(i).equals(genders[0])) {
                     genderItem = Gender.FEMALE;
-                } else if(adapterView.getItemAtPosition(i).equals(genders[1])) {
+                } else if (adapterView.getItemAtPosition(i).equals(genders[1])) {
                     genderItem = Gender.MALE;
                 }
             }
@@ -169,13 +155,13 @@ public class HireDeveloperActivity extends AppCompatActivity {
                 Resources res = getResources();
                 String[] roles = res.getStringArray(R.array.dev_role_array);
 
-                if(adapterView.getItemAtPosition(i).equals(roles[1])){
+                if (adapterView.getItemAtPosition(i).equals(roles[1])) {
                     roleItem = EmployeeRole.TESTER;
-                } else if(adapterView.getItemAtPosition(i).equals(roles[0])) {
+                } else if (adapterView.getItemAtPosition(i).equals(roles[0])) {
                     roleItem = EmployeeRole.DEVELOPER;
-                } else if(adapterView.getItemAtPosition(i).equals(roles[2])) {
+                } else if (adapterView.getItemAtPosition(i).equals(roles[2])) {
                     roleItem = EmployeeRole.CONTRIBUTOR;
-                } else if(adapterView.getItemAtPosition(i).equals(roles[3])) {
+                } else if (adapterView.getItemAtPosition(i).equals(roles[3])) {
                     roleItem = EmployeeRole.TEAM_LEADER;
                 }
             }
@@ -194,7 +180,7 @@ public class HireDeveloperActivity extends AppCompatActivity {
         universityLabel = findViewById(R.id.university);
         countryLabel = findViewById(R.id.country);
         firstName = findViewById(R.id.editFirstName);
-        lastName= findViewById(R.id.editLastName);
+        lastName = findViewById(R.id.editLastName);
         gender = findViewById(R.id.editGender);
         email = findViewById(R.id.editEmail);
         university = findViewById(R.id.editUniversity);
@@ -226,23 +212,23 @@ public class HireDeveloperActivity extends AppCompatActivity {
 
     private boolean checkForm() {
         boolean canAddCeo = true;
-        if(isEmpty(firstName)) {
+        if (isEmpty(firstName)) {
             firstNameLabel.setTextColor(Color.RED);
             canAddCeo = false;
         }
-        if(isEmpty(lastName)) {
+        if (isEmpty(lastName)) {
             lastNameLabel.setTextColor(Color.RED);
             canAddCeo = false;
         }
-        if(isEmpty(email)) {
+        if (isEmpty(email)) {
             emailLabel.setTextColor(Color.RED);
             canAddCeo = false;
         }
-        if(isEmpty(university)) {
+        if (isEmpty(university)) {
             universityLabel.setTextColor(Color.RED);
             canAddCeo = false;
         }
-        if(isEmpty(country)) {
+        if (isEmpty(country)) {
             countryLabel.setTextColor(Color.RED);
             canAddCeo = false;
         }

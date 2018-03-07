@@ -6,16 +6,20 @@ public class University {
 
     private final String university;
 
-    public University(String university) { this.university = university; }
+    public University(String university) {
+        this.university = university;
+    }
 
-    public String toString() { return university; }
+    public String toString() {
+        return university;
+    }
 
     @Override
     public boolean equals(Object o) {
-        if(o == this) {
+        if (o == this) {
             return true;
         }
-        if(!(o instanceof University)){
+        if (!(o instanceof University)) {
             return false;
         }
 

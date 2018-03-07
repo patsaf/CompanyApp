@@ -39,8 +39,6 @@ public class Report implements Comparable<Report> {
 
     public LastName getLastName() { return lastName; }
 
-    public EmployeeRole getRole() { return role; }
-
     public int getUnitsOfWork() { return unitsOfWork; }
 
     @Override

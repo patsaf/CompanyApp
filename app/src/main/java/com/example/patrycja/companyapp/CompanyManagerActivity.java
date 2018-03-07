@@ -10,13 +10,11 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.patrycja.companyapp.company.android.DeveloperAdapter;
 import com.example.patrycja.companyapp.company.android.Display;
 import com.example.patrycja.companyapp.company.android.InterfaceAdapter;
 import com.example.patrycja.companyapp.company.employees.Employee;
@@ -33,8 +31,6 @@ public class CompanyManagerActivity extends AppCompatActivity {
     private int index;
     private TeamManager ceo;
     private TeamManager manager;
-    private TextView displayManager;
-    private TextView displayManagerDetails;
     private final Display display = new Display();
     private Button back;
     private Button hire;
@@ -42,7 +38,6 @@ public class CompanyManagerActivity extends AppCompatActivity {
     private Button cancel;
     private Button fire;
     private Button assign;
-    private LinearLayout linearButtons;
     private Spinner fireSpinner;
     private RelativeLayout relativeSpinner;
     private final String select = "[select employees]";
@@ -52,9 +47,12 @@ public class CompanyManagerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.company_manager_activity);
 
-        index = getIntent().getExtras().getInt("managerIndex");
+        index = getIntent()
+                .getExtras()
+                .getInt("managerIndex");
         String ceoData = getIntent().getStringExtra("ceoData");
-        Gson gson = new GsonBuilder().registerTypeAdapter(Employee.class, new InterfaceAdapter<Employee>())
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(Employee.class, new InterfaceAdapter<Employee>())
                 .create();
         ceo = gson.fromJson(ceoData, TeamManager.class);
         manager = (TeamManager) ceo.getListEmployee(index);
@@ -68,12 +66,11 @@ public class CompanyManagerActivity extends AppCompatActivity {
     }
 
     private void initialize() {
-        displayManager = findViewById(R.id.manager);
-        displayManager.setText(display.displayManagerBrief(manager));
-        displayManagerDetails = findViewById(R.id.manager_details);
-        displayManagerDetails.setText(display.displayManager(manager));
+        TextView displayManager = findViewById(R.id.manager);
+        displayManager.setText(display.displayBrief(manager));
+        TextView displayManagerDetails = findViewById(R.id.manager_details);
+        displayManagerDetails.setText(display.displayAllInfo(manager));
         back = findViewById(R.id.back);
-        linearButtons = findViewById(R.id.linear_buttons);
         hire = findViewById(R.id.hireButton);
         showTeam = findViewById(R.id.show_team);
         fireSpinner = findViewById(R.id.fire_spinner);
@@ -84,100 +81,81 @@ public class CompanyManagerActivity extends AppCompatActivity {
     }
 
     private void setupBack() {
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startMyActivity(ManagerListActivity.class);
-            }
-        });
+        back.setOnClickListener(view -> startMyActivity(ManagerListActivity.class));
     }
 
     private void setupHire() {
-        hire.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (manager.getListSize() < manager.getCapacity()) {
-                    startMyActivity(HireDeveloperActivity.class);
-                } else {
-                    Toast.makeText(context, "Your team is full!", Toast.LENGTH_SHORT).show();
-                }
+        hire.setOnClickListener(view -> {
+            if (manager.getListSize() < manager.getCapacity()) {
+                startMyActivity(HireDeveloperActivity.class);
+            } else {
+                Toast.makeText(context, "Your team is full!", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     private void setupShowTeam() {
-        showTeam.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (manager.getListSize() != 0) {
-                   startMyActivity(DeveloperListActivity.class);
-                } else {
-                    Toast.makeText(context, "Your team is empty!", Toast.LENGTH_SHORT).show();
-                }
+        showTeam.setOnClickListener(view -> {
+            if (manager.getListSize() != 0) {
+                startMyActivity(DeveloperListActivity.class);
+            } else {
+                Toast.makeText(context, "Your team is empty!", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
 
     private void setupFire() {
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                relativeSpinner.setVisibility(View.INVISIBLE);
-                fireSpinner.setVisibility(View.INVISIBLE);
-                cancel.setVisibility(View.INVISIBLE);
-                showTeam.setVisibility(View.VISIBLE);
-                RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) back.getLayoutParams();
-                params.addRule(RelativeLayout.BELOW, R.id.show_team);
-                back.setLayoutParams(params);
-            }
+        cancel.setOnClickListener(view -> {
+            relativeSpinner.setVisibility(View.INVISIBLE);
+            fireSpinner.setVisibility(View.INVISIBLE);
+            cancel.setVisibility(View.INVISIBLE);
+            showTeam.setVisibility(View.VISIBLE);
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) back.getLayoutParams();
+            params.addRule(RelativeLayout.BELOW, R.id.show_team);
+            back.setLayoutParams(params);
         });
 
-        fire.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (manager.getListSize() != 0) {
-                    relativeSpinner.setVisibility(View.VISIBLE);
-                    fireSpinner.setVisibility(View.VISIBLE);
-                    cancel.setVisibility(View.VISIBLE);
-                    showTeam.setVisibility(View.INVISIBLE);
+        fire.setOnClickListener(view -> {
+            if (manager.getListSize() != 0) {
+                relativeSpinner.setVisibility(View.VISIBLE);
+                fireSpinner.setVisibility(View.VISIBLE);
+                cancel.setVisibility(View.VISIBLE);
+                showTeam.setVisibility(View.INVISIBLE);
 
-                    RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) back.getLayoutParams();
-                    params.addRule(RelativeLayout.BELOW, R.id.cancel);
-                    back.setLayoutParams(params);
+                RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) back.getLayoutParams();
+                params.addRule(RelativeLayout.BELOW, R.id.cancel);
+                back.setLayoutParams(params);
 
-                    setSpinnerAdapter();
-                    fireSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                        @Override
-                        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                            if (!(adapterView.getItemAtPosition(i).equals(select))) {
-                                Employee employee = manager.getListEmployee(i - 1);
-                                String message = employee.getFirstName().toString() + " " + employee.getLastName().toString();
-                                FirePopup firePopup = new FirePopup();
-                                firePopup.display(activity, confirm_proc(employee), message);
-                                adapterView.setSelection(0);
-                            }
+                setSpinnerAdapter();
+                fireSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                        if (!(adapterView.getItemAtPosition(i).equals(select))) {
+                            Employee employee = manager.getListEmployee(i - 1);
+                            String message = employee.getFirstName().toString() + " " + employee.getLastName().toString();
+                            FirePopup firePopup = new FirePopup();
+                            firePopup.display(activity, confirm_proc(employee), message);
+                            adapterView.setSelection(0);
                         }
+                    }
 
-                        @Override
-                        public void onNothingSelected(AdapterView<?> adapterView) {}
-                    });
-                } else {
-                    Toast.makeText(context, "Your team is empty!", Toast.LENGTH_SHORT).show();
-                }
+                    @Override
+                    public void onNothingSelected(AdapterView<?> adapterView) {
+                    }
+                });
+            } else {
+                Toast.makeText(context, "Your team is empty!", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     private void setupAssign() {
-        assign.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(manager.getListSize()!=0) {
-                    startMyActivity(TaskActivity.class);
-                } else {
-                    Toast.makeText(context, "Your team is empty!", Toast.LENGTH_SHORT).show();
-                }
+        assign.setOnClickListener(view -> {
+            if (manager.getListSize() != 0) {
+                startMyActivity(TaskActivity.class);
+            } else {
+                Toast.makeText(context, "Your team is empty!", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -191,11 +169,12 @@ public class CompanyManagerActivity extends AppCompatActivity {
         intent.putExtra("managerIndex", index);
         startActivity(intent);
     }
+
     private void setSpinnerAdapter() {
         ArrayList<String> employees = new ArrayList<>();
         Employee employee;
         employees.add(select);
-        for(int i=0; i<manager.getListSize(); i++) {
+        for (int i = 0; i < manager.getListSize(); i++) {
             employee = manager.getListEmployee(i);
             employees.add(employee.getFirstName() + " " + employee.getLastName());
         }
@@ -205,13 +184,11 @@ public class CompanyManagerActivity extends AppCompatActivity {
         fireSpinner.setAdapter(spinnerAdapter);
     }
 
-    private Runnable confirm_proc(Employee employee){
-        return new Runnable() {
-            public void run() {
-                manager.fire(employee);
-                setSpinnerAdapter();
-                Toast.makeText(context, "Fired successfully!", Toast.LENGTH_SHORT).show();
-            }
+    private Runnable confirm_proc(Employee employee) {
+        return () -> {
+            manager.fire(employee);
+            setSpinnerAdapter();
+            Toast.makeText(context, "Fired successfully!", Toast.LENGTH_SHORT).show();
         };
     }
 }

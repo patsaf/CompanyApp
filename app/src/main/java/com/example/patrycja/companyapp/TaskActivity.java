@@ -10,8 +10,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -54,20 +52,23 @@ public class TaskActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.task_activity);
 
-        index = getIntent().getExtras().getInt("managerIndex");
+        index = getIntent()
+                .getExtras()
+                .getInt("managerIndex");
         String ceoData = getIntent().getStringExtra("ceoData");
-        Gson gson = new GsonBuilder().registerTypeAdapter(Employee.class, new InterfaceAdapter<Employee>())
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(Employee.class, new InterfaceAdapter<Employee>())
                 .create();
         ceo = gson.fromJson(ceoData, TeamManager.class);
-        if(index != -1) {
+        if (index != -1) {
             manager = (TeamManager) ceo.getListEmployee(index);
         }
 
         initialize();
         if (index != -1) {
-            title.setText("Tasks assigned by: " + display.displayManagerBrief(manager));
+            title.setText("Tasks assigned by: " + display.displayBrief(manager));
         } else {
-            title.setText("Tasks assigned by: " + display.displayManagerBrief(ceo));
+            title.setText("Tasks assigned by: " + display.displayBrief(ceo));
         }
 
         setupGenerateRandom();
@@ -76,7 +77,7 @@ public class TaskActivity extends AppCompatActivity {
         setupBack(returnButton);
     }
 
-    private  void initialize() {
+    private void initialize() {
         title = findViewById(R.id.title);
         taskTitle = findViewById(R.id.task_form_title);
         taskNameLabel = findViewById(R.id.task_name);
@@ -91,14 +92,11 @@ public class TaskActivity extends AppCompatActivity {
     }
 
     private void setupGenerateRandom() {
-        generateRandom.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                TaskFactory taskItem = new TaskFactory();
-                Random r = new Random();
-                taskName.setText(taskItem.getTaskName());
-                units.setText(Integer.toString(r.nextInt(20)+1));
-            }
+        generateRandom.setOnClickListener(view -> {
+            TaskFactory taskItem = new TaskFactory();
+            Random r = new Random();
+            taskName.setText(taskItem.getTaskName());
+            units.setText(Integer.toString(r.nextInt(20) + 1));
         });
     }
 
@@ -106,32 +104,29 @@ public class TaskActivity extends AppCompatActivity {
         chooseEmployee.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if(!(adapterView.getItemAtPosition(i).equals(select))) {
+                if (!(adapterView.getItemAtPosition(i).equals(select))) {
                     setFormVisible();
-                    assignButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            Task task;
-                            setTextBlack();
-                            if(checkForm()) {
-                                try {
-                                    task = new Task(
-                                            taskName.getText().toString(),
-                                            Integer.parseInt(units.getText().toString()));
-                                    if(index != -1) {
-                                        Employee employee = manager.getListEmployee(i-1);
-                                        manager.assign(task, employee);
-                                    } else {
-                                        Employee employee = ceo.getListEmployee(i-1);
-                                        ceo.assign(task, employee);
-                                    }
-                                    adapterView.setSelection(0);
-                                    setupForm();
-                                    mainScrollView.fullScroll(View.FOCUS_UP);
-                                    Toast.makeText(context, "Assigned successfully!", Toast.LENGTH_SHORT).show();
-                                } catch(IllegalArgumentException e) {
-                                    Toast.makeText(context, "Invalid data!", Toast.LENGTH_SHORT).show();
+                    assignButton.setOnClickListener(view1 -> {
+                        Task task;
+                        setTextBlack();
+                        if (checkForm()) {
+                            try {
+                                task = new Task(
+                                        taskName.getText().toString(),
+                                        Integer.parseInt(units.getText().toString()));
+                                if (index != -1) {
+                                    Employee employee = manager.getListEmployee(i - 1);
+                                    manager.assign(task, employee);
+                                } else {
+                                    Employee employee = ceo.getListEmployee(i - 1);
+                                    ceo.assign(task, employee);
                                 }
+                                adapterView.setSelection(0);
+                                setupForm();
+                                mainScrollView.fullScroll(View.FOCUS_UP);
+                                Toast.makeText(context, "Assigned successfully!", Toast.LENGTH_SHORT).show();
+                            } catch (IllegalArgumentException e) {
+                                Toast.makeText(context, "Invalid data!", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
@@ -141,25 +136,24 @@ public class TaskActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {}
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
         });
     }
 
     private void setupBack(Button button) {
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(index != -1) {
-                    startMyActivity(CompanyManagerActivity.class);
-                } else {
-                    startMyActivity(CompanyMainActivity.class);
-                }
+        button.setOnClickListener(view -> {
+            if (index != -1) {
+                startMyActivity(CompanyManagerActivity.class);
+            } else {
+                startMyActivity(CompanyMainActivity.class);
             }
         });
     }
 
     private void startMyActivity(Class<?> activity) {
-        Gson gson = new GsonBuilder().registerTypeAdapter(Employee.class, new InterfaceAdapter<Employee>())
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(Employee.class, new InterfaceAdapter<Employee>())
                 .create();
         String json = gson.toJson(ceo);
         Intent intent = new Intent(context, activity);
@@ -192,7 +186,7 @@ public class TaskActivity extends AppCompatActivity {
         ArrayList<String> employees = new ArrayList<>();
         Employee employee;
         employees.add(select);
-        if(index != -1) {
+        if (index != -1) {
             for (int i = 0; i < manager.getListSize(); i++) {
                 employee = manager.getListEmployee(i);
                 employees.add(employee.getFirstName() + " " + employee.getLastName());
@@ -222,11 +216,11 @@ public class TaskActivity extends AppCompatActivity {
 
     private boolean checkForm() {
         boolean canAssign = true;
-        if(isEmpty(taskName)) {
+        if (isEmpty(taskName)) {
             taskNameLabel.setTextColor(Color.RED);
             canAssign = false;
         }
-        if(isEmpty(units)) {
+        if (isEmpty(units)) {
             unitsLabel.setTextColor(Color.RED);
             canAssign = false;
         }

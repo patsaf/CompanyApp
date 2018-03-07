@@ -66,21 +66,18 @@ public class CompanySetupActivity extends AppCompatActivity {
     }
 
     private void setupGenerateRandom() {
-        generateRandom.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                EmployeeFactory randomEmployee = new EmployeeFactory(EmployeeType.MANAGER, EmployeeRole.CEO, 2);
-                Resources res = getResources();
-                String[] genders = res.getStringArray(R.array.gender_array);
-                Random r = new Random();
-                lastName.setText(randomEmployee.getLastName());
-                email.setText(randomEmployee.getEmail());
-                university.setText(randomEmployee.getUniversity());
-                country.setText(randomEmployee.getCountry());
-                firstName.setText((gender.getSelectedItem().equals(genders[0])) ?
-                        randomEmployee.getFemaleName() : randomEmployee.getMaleName());
-                capacity.setText(Integer.toString(r.nextInt(5)+1));
-            }
+        generateRandom.setOnClickListener(view -> {
+            EmployeeFactory randomEmployee = new EmployeeFactory(EmployeeType.MANAGER, EmployeeRole.CEO, 2);
+            Resources res = getResources();
+            String[] genders = res.getStringArray(R.array.gender_array);
+            Random r = new Random();
+            lastName.setText(randomEmployee.getLastName());
+            email.setText(randomEmployee.getEmail());
+            university.setText(randomEmployee.getUniversity());
+            country.setText(randomEmployee.getCountry());
+            firstName.setText((gender.getSelectedItem().equals(genders[0])) ?
+                    randomEmployee.getFemaleName() : randomEmployee.getMaleName());
+            capacity.setText(Integer.toString(r.nextInt(5) + 1));
         });
     }
 
@@ -93,7 +90,7 @@ public class CompanySetupActivity extends AppCompatActivity {
                 String[] genders = res.getStringArray(R.array.gender_array);
                 if (adapterView.getItemAtPosition(i).equals(genders[0])) {
                     genderItem = Gender.FEMALE;
-                } else if(adapterView.getItemAtPosition(i).equals(genders[1])) {
+                } else if (adapterView.getItemAtPosition(i).equals(genders[1])) {
                     genderItem = Gender.MALE;
                 }
             }
@@ -116,17 +113,17 @@ public class CompanySetupActivity extends AppCompatActivity {
                 conditionDetail.setVisibility(View.INVISIBLE);
                 conditionDetailSpinner.setVisibility(View.INVISIBLE);
 
-                if(adapterView.getItemAtPosition(i).equals(predicates[0])){
+                if (adapterView.getItemAtPosition(i).equals(predicates[0])) {
                     predicateItem = Predicates.EMPTY;
-                } else if(adapterView.getItemAtPosition(i).equals(predicates[1])) {
+                } else if (adapterView.getItemAtPosition(i).equals(predicates[1])) {
                     predicateItem = Predicates.UNIVERSITY;
                     conditionDetailLabel.setVisibility(View.VISIBLE);
                     conditionDetail.setVisibility(View.VISIBLE);
-                } else if(adapterView.getItemAtPosition(i).equals(predicates[2])) {
+                } else if (adapterView.getItemAtPosition(i).equals(predicates[2])) {
                     predicateItem = Predicates.COUNTRY;
                     conditionDetailLabel.setVisibility(View.VISIBLE);
                     conditionDetail.setVisibility(View.VISIBLE);
-                } else if(adapterView.getItemAtPosition(i).equals(predicates[3])) {
+                } else if (adapterView.getItemAtPosition(i).equals(predicates[3])) {
                     predicateItem = Predicates.GENDER;
                     conditionDetailLabel.setVisibility(View.VISIBLE);
                     relativeSpinner.setVisibility(View.VISIBLE);
@@ -139,7 +136,7 @@ public class CompanySetupActivity extends AppCompatActivity {
                             String[] genders = res.getStringArray(R.array.gender_array);
                             if (adapterView.getItemAtPosition(i).equals(genders[0])) {
                                 genderConditionItem = Gender.FEMALE;
-                            } else if(adapterView.getItemAtPosition(i).equals(genders[1])) {
+                            } else if (adapterView.getItemAtPosition(i).equals(genders[1])) {
                                 genderConditionItem = Gender.MALE;
                             }
                         }
@@ -149,7 +146,7 @@ public class CompanySetupActivity extends AppCompatActivity {
                             genderConditionItem = Gender.FEMALE;
                         }
                     });
-                } else if(adapterView.getItemAtPosition(i).equals(predicates[4])) {
+                } else if (adapterView.getItemAtPosition(i).equals(predicates[4])) {
                     predicateItem = Predicates.EMAIL;
                     conditionDetailLabel.setVisibility(View.VISIBLE);
                     conditionDetail.setVisibility(View.VISIBLE);
@@ -172,7 +169,7 @@ public class CompanySetupActivity extends AppCompatActivity {
         conditionDetailLabel = findViewById(R.id.conditionDetail);
         capacityLabel = findViewById(R.id.capacity);
         firstName = findViewById(R.id.editFirstName);
-        lastName= findViewById(R.id.editLastName);
+        lastName = findViewById(R.id.editLastName);
         gender = findViewById(R.id.editGender);
         email = findViewById(R.id.editEmail);
         university = findViewById(R.id.editUniversity);
@@ -214,31 +211,32 @@ public class CompanySetupActivity extends AppCompatActivity {
 
     private boolean checkForm() {
         boolean canAddCeo = true;
-        if(isEmpty(capacity)) {
+        if (isEmpty(capacity)) {
             capacityLabel.setTextColor(Color.RED);
             canAddCeo = false;
         }
-        if(isEmpty(firstName)) {
+        if (isEmpty(firstName)) {
             firstNameLabel.setTextColor(Color.RED);
             canAddCeo = false;
         }
-        if(isEmpty(lastName)) {
+        if (isEmpty(lastName)) {
             lastNameLabel.setTextColor(Color.RED);
             canAddCeo = false;
         }
-        if(isEmpty(email)) {
+        if (isEmpty(email)) {
             emailLabel.setTextColor(Color.RED);
             canAddCeo = false;
         }
-        if(isEmpty(university)) {
+        if (isEmpty(university)) {
             universityLabel.setTextColor(Color.RED);
             canAddCeo = false;
         }
-        if(isEmpty(country)) {
+        if (isEmpty(country)) {
             countryLabel.setTextColor(Color.RED);
             canAddCeo = false;
-        } if(predicateItem!=Predicates.EMPTY && predicateItem!=Predicates.GENDER) {
-            if(isEmpty(conditionDetail)) {
+        }
+        if (predicateItem != Predicates.EMPTY && predicateItem != Predicates.GENDER) {
+            if (isEmpty(conditionDetail)) {
                 conditionDetail.setTextColor(Color.RED);
                 canAddCeo = false;
             }
@@ -251,7 +249,7 @@ public class CompanySetupActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 setTextBlack();
-                if(checkForm()) {
+                if (checkForm()) {
                     try {
                         ceo = new TeamManager.ManagerBuilder(EmployeeRole.CEO)
                                 .name(new FirstName(firstName.getText().toString()), new LastName(lastName.getText().toString()))
@@ -270,7 +268,7 @@ public class CompanySetupActivity extends AppCompatActivity {
                         Intent intent = new Intent(context, CompanyMainActivity.class);
                         intent.putExtra("ceoData", json);
                         startActivity(intent);
-                    } catch(IllegalArgumentException e) {
+                    } catch (IllegalArgumentException e) {
                         Toast.makeText(context, "Invalid data!", Toast.LENGTH_SHORT).show();
                     }
                 }

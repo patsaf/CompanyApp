@@ -18,7 +18,7 @@ import com.google.gson.GsonBuilder;
 import java.util.ArrayList;
 
 
-public class ManagerListActivity extends AppCompatActivity{
+public class ManagerListActivity extends AppCompatActivity {
 
     private final Context context = ManagerListActivity.this;
     private TeamManager ceo;
@@ -33,7 +33,8 @@ public class ManagerListActivity extends AppCompatActivity{
         setContentView(R.layout.list_activity);
 
         String ceoData = getIntent().getStringExtra("ceoData");
-        Gson gson = new GsonBuilder().registerTypeAdapter(Employee.class, new InterfaceAdapter<Employee>())
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(Employee.class, new InterfaceAdapter<Employee>())
                 .create();
         ceo = gson.fromJson(ceoData, TeamManager.class);
 
@@ -48,16 +49,13 @@ public class ManagerListActivity extends AppCompatActivity{
     }
 
     private void setupHideTeam() {
-        hideTeam.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Gson gson = new GsonBuilder().registerTypeAdapter(Employee.class, new InterfaceAdapter<Employee>())
-                        .create();
-                String json = gson.toJson(ceo);
-                Intent intent = new Intent(context, CompanyMainActivity.class);
-                intent.putExtra("ceoData", json);
-                startActivity(intent);
-            }
+        hideTeam.setOnClickListener(view -> {
+            Gson gson = new GsonBuilder().registerTypeAdapter(Employee.class, new InterfaceAdapter<Employee>())
+                    .create();
+            String json = gson.toJson(ceo);
+            Intent intent = new Intent(context, CompanyMainActivity.class);
+            intent.putExtra("ceoData", json);
+            startActivity(intent);
         });
     }
 

@@ -11,8 +11,6 @@ import android.widget.TextView;
 
 import com.example.patrycja.companyapp.CompanyManagerActivity;
 import com.example.patrycja.companyapp.R;
-import com.example.patrycja.companyapp.company.android.Display;
-import com.example.patrycja.companyapp.company.android.InterfaceAdapter;
 import com.example.patrycja.companyapp.company.employees.Employee;
 import com.example.patrycja.companyapp.company.managers.TeamManager;
 import com.google.gson.Gson;
@@ -40,23 +38,21 @@ public class EmployeeAdapter extends ArrayAdapter<Employee> {
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.employee_list, parent, false);
         }
-        TextView employeeBrief = (TextView) convertView.findViewById(R.id.employee);
-        TextView employeeDetails = (TextView) convertView.findViewById(R.id.employee_details);
-        Button showDetails = (Button) convertView.findViewById(R.id.show_details);
+        TextView employeeBrief = convertView.findViewById(R.id.employee);
+        TextView employeeDetails = convertView.findViewById(R.id.employee_details);
+        Button showDetails = convertView.findViewById(R.id.show_details);
 
-        employeeBrief.setText(display.displayManagerBrief(employee));
-        employeeDetails.setText(display.displayManager(employee));
-        showDetails.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Gson gson = new GsonBuilder().registerTypeAdapter(Employee.class, new InterfaceAdapter<Employee>())
-                        .create();
-                String json = gson.toJson(ceo);
-                Intent intent = new Intent(context, CompanyManagerActivity.class);
-                intent.putExtra("ceoData", json);
-                intent.putExtra("managerIndex", position);
-                context.startActivity(intent);
-            }
+        employeeBrief.setText(display.displayBrief(employee));
+        employeeDetails.setText(display.displayAllInfo(employee));
+        showDetails.setOnClickListener(view -> {
+            Gson gson = new GsonBuilder()
+                    .registerTypeAdapter(Employee.class, new InterfaceAdapter<Employee>())
+                    .create();
+            String json = gson.toJson(ceo);
+            Intent intent = new Intent(context, CompanyManagerActivity.class);
+            intent.putExtra("ceoData", json);
+            intent.putExtra("managerIndex", position);
+            context.startActivity(intent);
         });
 
         return convertView;

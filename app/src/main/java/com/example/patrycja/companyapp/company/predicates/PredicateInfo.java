@@ -23,15 +23,15 @@ public class PredicateInfo {
 
     public String toString() {
         String output = "";
-        switch(condition) {
+        switch (condition) {
             case EMAIL:
                 output = "Employs developers only with " + conditionDetails + " email domain";
                 break;
             case GENDER:
-                output =  "Employs only " + conditionDetails + " developers";
+                output = "Employs only " + conditionDetails + " developers";
                 break;
             case COUNTRY:
-                output =  "Employs only developers from " + conditionDetails;
+                output = "Employs only developers from " + conditionDetails;
                 break;
             case UNIVERSITY:
                 output = "Employs only " + conditionDetails + " graduates";

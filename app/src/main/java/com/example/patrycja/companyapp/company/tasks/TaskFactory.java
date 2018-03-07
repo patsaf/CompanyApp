@@ -5,7 +5,7 @@ import java.util.Random;
 public class TaskFactory {
 
     private final String[] developerTasks = {"Implement a new bug", "Write code review", "Process data", "Write reports",
-            "Test a new bug", "Implement a series of tests"};
+            "Test a new bug", "Implement a series of tests", "Gather reports", "Write reports"};
     private final Random r = new Random();
     private final String taskName;
 

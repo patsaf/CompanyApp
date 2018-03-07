@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -30,7 +29,8 @@ public class ReportActivity extends AppCompatActivity {
         setContentView(R.layout.report_activity);
 
         String ceoData = getIntent().getStringExtra("ceoData");
-        Gson gson = new GsonBuilder().registerTypeAdapter(Employee.class, new InterfaceAdapter<Employee>())
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(Employee.class, new InterfaceAdapter<Employee>())
                 .create();
         ceo = gson.fromJson(ceoData, TeamManager.class);
 
@@ -40,23 +40,21 @@ public class ReportActivity extends AppCompatActivity {
 
     private void initialize() {
         ceoDetails = findViewById(R.id.ceo);
-        ceoDetails.setText("Report gathered by: " + display.displayManagerBrief(ceo));
+        ceoDetails.setText("Report gathered by: " + display.displayBrief(ceo));
         displayReport = findViewById(R.id.report);
         displayReport.setText(ceo.reportWork().toString());
         backButton = findViewById(R.id.back_button);
     }
 
     private void setupBack() {
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Gson gson = new GsonBuilder().registerTypeAdapter(Employee.class, new InterfaceAdapter<Employee>())
-                        .create();
-                String json = gson.toJson(ceo);
-                Intent intent = new Intent(context, CompanyMainActivity.class);
-                intent.putExtra("ceoData", json);
-                startActivity(intent);
-            }
+        backButton.setOnClickListener(view -> {
+            Gson gson = new GsonBuilder()
+                    .registerTypeAdapter(Employee.class, new InterfaceAdapter<Employee>())
+                    .create();
+            String json = gson.toJson(ceo);
+            Intent intent = new Intent(context, CompanyMainActivity.class);
+            intent.putExtra("ceoData", json);
+            startActivity(intent);
         });
     }
 }

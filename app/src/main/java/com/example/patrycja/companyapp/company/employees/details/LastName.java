@@ -13,6 +13,8 @@ public class LastName {
         }
     }
 
-    public String toString() { return lastName; }
+    public String toString() {
+        return lastName;
+    }
 }
 

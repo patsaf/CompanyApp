@@ -19,10 +19,10 @@ public class ReportList {
 
     @Override
     public String toString() {
-        String output = "";
-        for(Report r: listOfReports) {
-            output += r + "\n";
+        StringBuilder output = new StringBuilder();
+        for (Report r : listOfReports) {
+            output.append(new StringBuilder().append(r).append("\n").toString());
         }
-        return output;
+        return output.toString();
     }
 }

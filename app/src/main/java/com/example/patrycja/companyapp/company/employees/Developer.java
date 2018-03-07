@@ -13,7 +13,7 @@ public class Developer extends AbstractEmployee implements Employee {
     }
 
     @Override
-    public void assign(Task task, Employee employee){
+    public void assign(Task task, Employee employee) {
         getTaskList().add(task);
         setUnitsOfWork(task.getUnitsOfWork());
     }

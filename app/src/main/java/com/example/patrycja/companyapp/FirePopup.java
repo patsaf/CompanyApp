@@ -12,7 +12,7 @@ public class FirePopup {
     private Button confirm;
     private Button cancel;
     private TextView message;
-    private Runnable ans_true;
+    private Runnable ansTrue;
 
     public void display(final Activity activity, Runnable true_poc, String title) {
 
@@ -20,7 +20,7 @@ public class FirePopup {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.popup_layout);
 
-        ans_true = true_poc;
+        ansTrue = true_poc;
 
         confirm = dialog.findViewById(R.id.confirm);
         cancel = dialog.findViewById(R.id.cancel_firing);
@@ -28,20 +28,12 @@ public class FirePopup {
 
         message.setText("Are you sure you want to fire " + title + "?");
 
-        confirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ans_true.run();
-                dialog.dismiss();
-            }
+        confirm.setOnClickListener(view -> {
+            ansTrue.run();
+            dialog.dismiss();
         });
 
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog.dismiss();
-            }
-        });
+        cancel.setOnClickListener(view -> dialog.dismiss());
         dialog.show();
     }
 }

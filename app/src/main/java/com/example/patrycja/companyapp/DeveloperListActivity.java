@@ -9,7 +9,6 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import com.example.patrycja.companyapp.company.android.DeveloperAdapter;
-import com.example.patrycja.companyapp.company.android.EmployeeAdapter;
 import com.example.patrycja.companyapp.company.android.InterfaceAdapter;
 import com.example.patrycja.companyapp.company.employees.Employee;
 import com.example.patrycja.companyapp.company.managers.TeamManager;
@@ -26,7 +25,6 @@ public class DeveloperListActivity extends AppCompatActivity {
     private int index;
     private ListView lv;
     private Button hideTeam;
-    private ArrayList<Employee> employeeList;
 
 
     @Override
@@ -36,7 +34,8 @@ public class DeveloperListActivity extends AppCompatActivity {
 
         index = getIntent().getExtras().getInt("managerIndex");
         String ceoData = getIntent().getStringExtra("ceoData");
-        Gson gson = new GsonBuilder().registerTypeAdapter(Employee.class, new InterfaceAdapter<Employee>())
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(Employee.class, new InterfaceAdapter<Employee>())
                 .create();
         ceo = gson.fromJson(ceoData, TeamManager.class);
         manager = (TeamManager) ceo.getListEmployee(index);
@@ -52,22 +51,19 @@ public class DeveloperListActivity extends AppCompatActivity {
     }
 
     private void setupHideTeam() {
-        hideTeam.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Gson gson = new GsonBuilder().registerTypeAdapter(Employee.class, new InterfaceAdapter<Employee>())
-                        .create();
-                String json = gson.toJson(ceo);
-                Intent intent = new Intent(context, CompanyManagerActivity.class);
-                intent.putExtra("ceoData", json);
-                intent.putExtra("managerIndex", index);
-                startActivity(intent);
-            }
+        hideTeam.setOnClickListener(view -> {
+            Gson gson = new GsonBuilder().registerTypeAdapter(Employee.class, new InterfaceAdapter<Employee>())
+                    .create();
+            String json = gson.toJson(ceo);
+            Intent intent = new Intent(context, CompanyManagerActivity.class);
+            intent.putExtra("ceoData", json);
+            intent.putExtra("managerIndex", index);
+            startActivity(intent);
         });
     }
 
     private void setupList() {
-        employeeList = new ArrayList<>();
+        ArrayList<Employee> employeeList = new ArrayList<>();
         for (int i = 0; i < manager.getListSize(); i++) {
             employeeList.add(manager.getListEmployee(i));
         }

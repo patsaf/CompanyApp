@@ -15,14 +15,16 @@ public class Email {
         }
     }
 
-    public String toString() { return email; }
+    public String toString() {
+        return email;
+    }
 
     @Override
     public boolean equals(Object o) {
-        if(o == this) {
+        if (o == this) {
             return true;
         }
-        if(!(o instanceof Email)){
+        if (!(o instanceof Email)) {
             return false;
         }
 

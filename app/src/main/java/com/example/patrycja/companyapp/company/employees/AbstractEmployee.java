@@ -1,16 +1,6 @@
 package com.example.patrycja.companyapp.company.employees;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
-import com.example.patrycja.companyapp.company.employees.details.Country;
-import com.example.patrycja.companyapp.company.employees.details.Email;
-import com.example.patrycja.companyapp.company.employees.details.EmployeeRole;
-import com.example.patrycja.companyapp.company.employees.details.EmployeeType;
-import com.example.patrycja.companyapp.company.employees.details.FirstName;
-import com.example.patrycja.companyapp.company.employees.details.Gender;
-import com.example.patrycja.companyapp.company.employees.details.LastName;
-import com.example.patrycja.companyapp.company.employees.details.University;
+import com.example.patrycja.companyapp.company.employees.details.*;
 import com.example.patrycja.companyapp.company.tasks.TaskList;
 
 public abstract class AbstractEmployee implements Employee {
@@ -59,43 +49,57 @@ public abstract class AbstractEmployee implements Employee {
     }
 
     @Override
-    public TaskList getTaskList() { return taskList;  }
+    public TaskList getTaskList() {
+        return taskList;
+    }
 
     @Override
-    public FirstName getFirstName() { return firstName; }
+    public FirstName getFirstName() {
+        return firstName;
+    }
 
     @Override
-    public LastName getLastName() { return lastName; }
+    public LastName getLastName() {
+        return lastName;
+    }
 
     @Override
-    public University getUniversity() { return university; }
+    public University getUniversity() {
+        return university;
+    }
 
     @Override
-    public Gender getGender() { return gender; }
+    public Gender getGender() {
+        return gender;
+    }
 
     @Override
-    public Country getCountry() { return country; }
+    public Country getCountry() {
+        return country;
+    }
 
     @Override
-    public Email getEmail() { return email; }
+    public Email getEmail() {
+        return email;
+    }
 
     @Override
     public String toString() {
-        return role.name() + " { "  + firstName +
+        return role.name() + " { " + firstName +
                 " " + lastName + ", " + gender + ", " + email +
                 ", " + country + ", " + university + " }\n";
     }
 
     public static abstract class Builder<T extends Builder<T>> {
 
-        private  EmployeeType type;
-        private  EmployeeRole role;
-        private  FirstName firstName;
-        private  LastName lastName;
-        private  University university;
-        private  Gender gender;
-        private  Country country;
-        private  Email email;
+        private EmployeeType type;
+        private EmployeeRole role;
+        private FirstName firstName;
+        private LastName lastName;
+        private University university;
+        private Gender gender;
+        private Country country;
+        private Email email;
 
         protected abstract T self();
 
